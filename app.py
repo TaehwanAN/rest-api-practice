@@ -2,7 +2,6 @@
 
 # environment setting
 import os 
-from dotenv import load_dotenv
 
 from flask import Flask # app run
 from flask_smorest import Api # api register
@@ -14,7 +13,6 @@ from resources.user import blp as UserBluePrint # resource registration
 
 def create_app(prd=False): # Factory pattern
   app = Flask(__name__) # app object create
-  load_dotenv() # load .env
   # debug
   app.config["PROPAGATE_EXCEPTIONS"] = True
   # api setting
@@ -26,10 +24,10 @@ def create_app(prd=False): # Factory pattern
   app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
   app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
   # database url setting(docker cmd -> create_app(prd=True))
-  if prd:
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL_PRD")
-  else:
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL_DEV")
+  database_url = os.environ.get("DATABASE_URL_PRD") if prd else os.environ.get("DATABASE_URL_DEV")
+  if not database_url:
+        raise RuntimeError("DATABASE_URL 환경 변수가 설정되지 않았습니다.")
+  app.config["SQLALCHEMY_DATABASE_URI"] = database_url
   app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
   # Flask-SQLAlchemy 초기화
   db.init_app(app)

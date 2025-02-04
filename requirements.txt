@@ -1,0 +1,10 @@
+python-dotenv
+flask
+flask-smorest
+flask-migrate # connection between flask and Alembic
+flask-sqlalchemy
+flask-jwt-extended
+sqlalchemy
+passlib
+gunicorn
+psycopg2

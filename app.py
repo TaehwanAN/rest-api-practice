@@ -11,7 +11,7 @@ from flask_migrate import Migrate # database migration
 
 from resources.user import blp as UserBluePrint # resource registration
 
-def create_app(prd=False): # Factory pattern
+def create_app(): # Factory pattern
   app = Flask(__name__) # app object create
   # debug
   app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -24,10 +24,9 @@ def create_app(prd=False): # Factory pattern
   app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
   app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
   # database url setting(docker cmd -> create_app(prd=True))
-  database_url = os.environ.get("DATABASE_URL_PRD") if prd else os.environ.get("DATABASE_URL_DEV")
-  app.logger.info("################database url: ",database_url)
+  database_url = os.environ.get("DATABASE_URL")
+  app.logger.info(f"################database url: {database_url}")
   app.config["SQLALCHEMY_DATABASE_URI"] = database_url
-  app.logger.info(app.config["SQLALCHEMY_DATABASE_URI"],"##############################")
   app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
   # Flask-SQLAlchemy 초기화
   db.init_app(app)

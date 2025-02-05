@@ -25,8 +25,6 @@ def create_app(prd=False): # Factory pattern
   app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
   # database url setting(docker cmd -> create_app(prd=True))
   database_url = os.environ.get("DATABASE_URL_PRD") if prd else os.environ.get("DATABASE_URL_DEV")
-  if not database_url:
-        raise RuntimeError("DATABASE_URL 환경 변수가 설정되지 않았습니다.")
   app.config["SQLALCHEMY_DATABASE_URI"] = database_url
   app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
   # Flask-SQLAlchemy 초기화

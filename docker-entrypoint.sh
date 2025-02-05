@@ -29,4 +29,4 @@ flask db upgrade
 
 # Flask 애플리케이션 실행
 echo "Starting Flask app..."
-exec gunicorn -w 4 -b 0.0.0.0:80 "app:app"
+exec gunicorn --bind 0.0.0.0:80 "app:create_app(prd=True)"

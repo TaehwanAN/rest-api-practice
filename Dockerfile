@@ -1,13 +1,12 @@
 # 언어
 FROM python:3.10
 # 포트
-# EXPOSE 5000 # gunicorn 사용하게 되므로 http 사용용
+# EXPOSE 5000 # gunicorn -> http 80 port
 # 디렉토리:
 WORKDIR /app
 # 디펜던시
 COPY requirements.txt .
 # 실행
-# RUN pip install -r requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 # 현재 디렉토리(.) 를 도커 이미지 내 디렉토리(.)로 카피
 COPY . .
@@ -15,8 +14,8 @@ COPY . .
 RUN chmod +x docker-entrypoint.sh
 
 CMD ["/bin/bash","docker-entrypoint.sh"]
-# ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
+# Dokcer Commands
 # 터미널 이미지 생성 명령: docker build -t rest-api-flask-python .
 ## -t : 태그 / rest-api-flask-python: 이미지명 / . : 도커파일 위치
 # 터미널 이미지 실행 명령: docker run -p 5005:5000 rest-api-flask-python -> 도커 컨테이너 생성됨

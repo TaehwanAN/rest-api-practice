@@ -12,8 +12,10 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 # 현재 디렉토리(.) 를 도커 이미지 내 디렉토리(.)로 카피
 COPY . .
 # --host 0.0.0.0 : 컨테이너 밖에서도 실행될 수 있도록
-CMD ["/bin/bash","docker-entrypoint.sh"]
+RUN chmod +x docker-entrypoint.sh
 
+# CMD ["/bin/bash","docker-entrypoint.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # 터미널 이미지 생성 명령: docker build -t rest-api-flask-python .
 ## -t : 태그 / rest-api-flask-python: 이미지명 / . : 도커파일 위치

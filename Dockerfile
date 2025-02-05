@@ -14,8 +14,8 @@ COPY . .
 # --host 0.0.0.0 : 컨테이너 밖에서도 실행될 수 있도록
 RUN chmod +x docker-entrypoint.sh
 
-# CMD ["/bin/bash","docker-entrypoint.sh"]
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+CMD ["/bin/bash","docker-entrypoint.sh"]
+# ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # 터미널 이미지 생성 명령: docker build -t rest-api-flask-python .
 ## -t : 태그 / rest-api-flask-python: 이미지명 / . : 도커파일 위치

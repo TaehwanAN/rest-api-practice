@@ -4,9 +4,10 @@
 import os 
 
 from flask import Flask # app run
+from flask_jwt_extended import JWTManager
 from flask_smorest import Api # api register
 
-from db import db # database SQLAlchemy
+from db import db, BLOCKLIST # database SQLAlchemy
 from flask_migrate import Migrate # database migration
 
 from resources.user import blp as UserBluePrint # resource registration
@@ -30,9 +31,15 @@ def create_app(): # Factory pattern
   # Flask-SQLAlchemy 초기화
   db.init_app(app)
   migrate = Migrate(app, db)
+  # JWT Setting
+  app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+  jwt=JWTManager(app)
+  ## for logout using jwt(jti) blocklist
+  @jwt.token_in_blocklist_loader
+  def check_if_token_in_blocklist(jwt_header, jwt_payload):
+    return jwt_payload["jti"] in BLOCKLIST
   # Flask-Smorest API 초기화
   api = Api(app)
-
   api.register_blueprint(UserBluePrint)
 
   return app

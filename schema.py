@@ -10,3 +10,7 @@ class UserSchema(Schema):
   created_at = fields.DateTime(dump_only=True)
   is_active = fields.Boolean(dump_only=True)
   is_delete = fields.Boolean(dump_only=True)
+  is_admin = fields.Boolean(dump_only=True)
+
+class UserLoginSchema(UserSchema):
+  username = fields.Str()

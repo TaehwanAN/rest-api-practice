@@ -10,6 +10,7 @@ from flask_smorest import Api # api register
 from db import db, BLOCKLIST # database SQLAlchemy
 from flask_migrate import Migrate # database migration
 
+from resources.conn_test import blp as ConnTestBluePrint
 from resources.user import blp as UserBluePrint # resource registration
 
 def create_app(): # Factory pattern
@@ -41,5 +42,6 @@ def create_app(): # Factory pattern
   # Flask-Smorest API 초기화
   api = Api(app)
   api.register_blueprint(UserBluePrint)
+  api.register_blueprint(ConnTestBluePrint)
 
   return app

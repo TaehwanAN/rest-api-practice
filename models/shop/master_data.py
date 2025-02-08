@@ -4,7 +4,7 @@ class CustomerModel(db.Model):
   __tablename__ = "customers"
 
   customer_id = db.Column(db.String(36), primary_key = True) # uuid4
-  company_name = db.Column(db.String(100), nullable=False, unique=True) # db.String: char varying / db.Char: char
+  company_name = db.Column(db.String(100), nullable=False) # db.String: char varying / db.Char: char
   is_deleted = db.Column(db.Boolean(), default=False)
 
   purchases = db.relationship("PurchaseModel", back_populates = "customer", lazy="dynamic", cascade="all, delete")

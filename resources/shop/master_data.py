@@ -27,8 +27,8 @@ class Customers(MethodView):
     try:
       db.session.add(customer)
       db.session.commit()
-    except IntegrityError:
-      abort(400, message="already exists")
+    except IntegrityError as e:
+      abort(400,exc=e, message="already exists")
     return customer
   
   @customer_blp.response(200, PlainCustomerSchema(many=True))
@@ -83,8 +83,8 @@ class Products(MethodView):
     try:
       db.session.add(product)
       db.session.commit()
-    except IntegrityError:
-      abort(400, message="already exists")
+    except IntegrityError as e:
+      abort(400, exc=e,message="already exists")
     return product
   
   @product_blp.response(200, PlainProductSchema(many=True))

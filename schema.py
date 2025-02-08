@@ -19,20 +19,28 @@ class PlainCustomerSchema(Schema): # post
   customer_id = fields.Str(dump_only=True)
   company_name = fields.Str(required=True)
 
-class DetailCustomerSchema(PlainCustomerSchema): # put
-  company_name = fields.Str(required=False)
-  is_deleted = fields.Boolean(dump_only=True)
-  # purchases = fields.List()
-
 class PlainProductSchema(Schema): # post 
   product_id = fields.Str(dump_only=True)
   product_name = fields.Str(required=True)
   unit_price = fields.Float(required=True)
+
+class PlainPurchaseSchema(Schema): # post
+  purchase_id = fields.Int(dump_only = True)
+  customer_id = fields.Str(load_only = True)
+  customer = fields.Nested(PlainCustomerSchema(), dump_only=True)
+  product_id = fields.Str(load_only=True)
+  product = fields.Nested(PlainProductSchema(), dump_only=True)
+  quantity = fields.Int(required=True)
+  datetime = fields.DateTime(dump_only=True)
+  is_deleted = fields.Boolean(dump_only=True)
+
+class DetailCustomerSchema(PlainCustomerSchema): # put
+  company_name = fields.Str(required=False)
+  is_deleted = fields.Boolean(dump_only=True)
+  purchases = fields.List(fields.Nested(PlainPurchaseSchema()), dump_only=True)
   
 class DetailProductSchema(PlainProductSchema): # put
   product_name = fields.Str(required=False)
   unit_price = fields.Float(required=False)
   is_deleted = fields.Boolean(dump_only=True)
-
-# class CustomerSchema(PlainCustomerSchema): # get
-#   purchases = 
+  purchases = fields.List(fields.Nested(PlainPurchaseSchema()), dump_only=True)

@@ -12,6 +12,7 @@ from flask_migrate import Migrate # database migration
 
 from resources.conn_test import blp as ConnTestBluePrint
 from resources.user import blp as UserBluePrint # resource registration
+from resources.shop.master_data import customer_blp as CustomerBluePrint, product_blp as ProductBluePrint
 
 def create_app(): # Factory pattern
   app = Flask(__name__) # app object create
@@ -43,5 +44,7 @@ def create_app(): # Factory pattern
   api = Api(app)
   api.register_blueprint(UserBluePrint)
   api.register_blueprint(ConnTestBluePrint)
+  api.register_blueprint(CustomerBluePrint)
+  api.register_blueprint(ProductBluePrint)
 
   return app

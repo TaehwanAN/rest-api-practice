@@ -2,7 +2,7 @@ from marshmallow import Schema, fields
 
 # plain schema: without relational fields
 # schema: with all fields
-class UserSchema(Schema): # register
+class PlainUserSchema(Schema): # register
   id = fields.Int(dump_only=True) # dump_only: read_only, only in response, serialization
   userid = fields.Str(required=True)
   password = fields.Str(required=True, load_only=True) # write_only, only in request, deserialization
@@ -12,7 +12,7 @@ class UserSchema(Schema): # register
   is_delete = fields.Boolean(dump_only=True)
   is_admin = fields.Boolean(dump_only=True)
 
-class UserLoginSchema(UserSchema): # login
+class LoginUserSchema(PlainUserSchema): # login
   username = fields.Str() # To login, only userid and password required
 
 class PlainCustomerSchema(Schema): # post
